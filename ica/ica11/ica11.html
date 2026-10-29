@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICA11: A Silly Story</title>
+    <link href="ica11.css" rel="stylesheet">
+</head>
+<body>
+    
+    <div>
+        <label for="custom-name">Enter custom name:</label>
+        <input id="custom-name" type="text" placeholder="" />
+    </div>
+
+    <fieldset>
+        <legend>Choose locale:</legend>
+        
+        <label for="us">US</label>
+        <input id="us" type="radio" name="uk-us" value="us" checked />
+        
+        <label for="uk">UK</label>
+        <input id="uk" type="radio" name="uk-us" value="uk" />
+    </fieldset>
+    
+    <button class="generate">Generate random story</button>
+    
+    <p class="story"></p>
+
+    <!-- Thanks a lot to Willy Aguirre for his help with the code for this assessment -->
+    <script>
+        // Complete variable definitions and random functions
+
+        const customName = document.getElementById("custom-name");
+        const generateBtn = document.querySelector(".generate");
+        const story = document.querySelector(".story");
+
+        function randomValueFromArray(array) {
+            const random = Math.floor(Math.random() * array.length);
+            return array[random];
+        }
+
+        // Raw text strings
+        
+        let characters = [
+            "Gobblegor the Grand",
+            "Tim Ol' Timmy Tim",
+            ":3",
+            "Illaoi",
+            "Doctor Ludvig Maxis",
+            "Yharon",
+        ]
+
+        let places = [
+            "the Below Place",
+            "the Crazy Place",
+            "The House",
+            "the Glowing Mushroom Forest",
+            "the Dwellers' Dwelling",
+            "Springfield",
+        ]
+        
+        let events = [
+            "imploded and became a tiny black hole that then went on to destroy the multiverse",
+            "were absorbed by The Summoning Key",
+            "got turned their clothes inside out",
+            "witnessed horrors within their comprehension",
+            "witnessed their comprehension horrors outside",
+            "turned into moss",
+        ]
+
+        // Partial return random string function
+
+        function returnRandomStoryString() {
+            const randomCharacter = randomValueFromArray(characters);
+            const randomPlace = randomValueFromArray(places);
+            const randomEvent = randomValueFromArray(events);
+
+            let storyText= 
+            `It was 121 degrees Fahrenheit outside, so ${randomCharacter} decided to stay in for the day. 
+            They wander their house for a bit, then went into the basement for a snack, only to find a portal to ${randomPlace}, they stared in horror for a few moments before walking through.
+            What else were they gonna do today? After exploring ${randomPlace} for a bit, they saw some creepy dude, and suddenly they ${randomEvent}. 
+            Bob was irrelevent to ${randomCharacter}'s story, but happened to live about 3 blocks from their house.`;
+
+            return storyText;
+        }
+
+        // Event listener and partial generate function definition
+
+        generateBtn.addEventListener("click", generateStory);
+
+        function generateStory() {
+
+            let newStory = returnRandomStoryString();
+
+            if (customName.value !== "") {
+                const name = customName.value;
+                newStory = newStory.replace("Bob", name);
+            }
+
+            if (document.getElementById("uk").checked) {
+                const weight = Math.round(300/14) + " stone";
+                newStory = newStory.replace("300 pounds", weight);
+                const temperature = Math.round((121-32)/1.8) + " degrees Celsius";
+                newStory = newStory.replace("121 degrees Fahrenheit", temperature);
+            }
+            
+            story.textContent = newStory;
+            story.style.visibility = "visible";
+        }
+    </script>
+</body>
+</html>
